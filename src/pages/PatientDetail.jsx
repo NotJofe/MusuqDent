@@ -21,7 +21,7 @@ export default function PatientDetail() {
     pagos: sortBy(pagos.filter((p) => p.pacienteId === id), '-fecha'),
     citas: sortBy(citas.filter((c) => c.pacienteId === id), '-inicio'),
   }), [atenciones, pagos, citas, id])
-  const balance = useMemo(() => patientBalance(id, atenciones, pagos), [id, atenciones, pagos])
+  const balance = useMemo(() => patientBalance(id, atenciones, pagos, citas), [id, atenciones, pagos, citas])
 
   if (!paciente) {
     return <EmptyState>El paciente no existe o fue eliminado. <Link to="/pacientes">Volver a la lista</Link></EmptyState>
@@ -164,7 +164,7 @@ export default function PatientDetail() {
                 <li key={c.id} className="list-row clickable" onClick={() => setModal({ kind: 'cita', record: c })}>
                   <div className="grow">
                     <strong>{formatDateTime(c.inicio, { weekday: true })}</strong>
-                    <div className="muted small">{c.motivo || 'Sin motivo'}{byId.doctores[c.doctorId] ? ` · Dr(a). ${fullName(byId.doctores[c.doctorId])}` : ''}</div>
+                    <div className="muted small">{c.motivo || 'Sin motivo'}{byId.doctores[c.doctorId] ? ` · Dr(a). ${fullName(byId.doctores[c.doctorId])}` : ''}{c.costo ? ` · ${formatMoney(c.costo)}` : ''}</div>
                   </div>
                   <StateBadge estado={c.estado} />
                 </li>

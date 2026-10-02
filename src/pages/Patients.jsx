@@ -8,12 +8,12 @@ import { columnsOf, emptyRecord, TABLES } from '../lib/schema.js'
 import { age, downloadFile, formatMoney, fullName, normalize, sortBy, todayISO } from '../lib/utils.js'
 
 export default function Patients() {
-  const { pacientes, atenciones, pagos, create } = useData()
+  const { pacientes, atenciones, pagos, citas, create } = useData()
   const [query, setQuery] = useState('')
   const [creating, setCreating] = useState(false)
   const navigate = useNavigate()
 
-  const balances = useMemo(() => balancesByPatient(atenciones, pagos), [atenciones, pagos])
+  const balances = useMemo(() => balancesByPatient(atenciones, pagos, citas), [atenciones, pagos, citas])
   const lastVisit = useMemo(() => {
     const m = new Map()
     for (const a of atenciones) if ((m.get(a.pacienteId) ?? '') < a.fecha) m.set(a.pacienteId, a.fecha)

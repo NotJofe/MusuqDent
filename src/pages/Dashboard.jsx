@@ -15,7 +15,7 @@ export default function Dashboard() {
     in7.setUTCDate(in7.getUTCDate() + 7)
     const limit = in7.toISOString().slice(0, 10)
     const active = citas.filter((c) => c.estado !== 'Cancelada')
-    const balances = balancesByPatient(atenciones, pagos)
+    const balances = balancesByPatient(atenciones, pagos, citas)
     return {
       hoy: sortBy(active.filter((c) => c.inicio.slice(0, 10) === today), 'inicio'),
       semana: active.filter((c) => c.inicio.slice(0, 10) > today && c.inicio.slice(0, 10) <= limit).length,

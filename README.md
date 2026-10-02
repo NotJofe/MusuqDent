@@ -19,6 +19,7 @@ tienen acceso de edición a esa hoja.
 | **Ficha del paciente** | Historial de atenciones (tratamiento, pieza dental, diagnóstico, doctor, costo), pagos (Efectivo, Yape, Plin, tarjeta, transferencia), estado de cuenta y citas. |
 | **Doctores** | Nombre, especialidad, n° COP, contacto y color en la agenda. Se pueden desactivar sin perder su historial. |
 | **Agenda** | Calendario tipo Google Calendar (mes / semana / día / lista). Clic en un horario para agendar, arrastrar para reprogramar, filtro por doctor y estados (programada, confirmada, atendida, cancelada, no asistió). |
+| **Cita atendida** | Al marcar una cita como *Atendida* aparecen dos acciones: **Crear atención** (rápida, con los datos de la cita, o completándola manualmente) y **Registrar pago**. Cada cita puede tener un **costo del servicio**: es opcional al agendar, pero obligatorio para registrar un pago. Se muestra lo pagado y lo pendiente de la cita. |
 | **Compartir cita** | Enviar recordatorio por **WhatsApp** al celular del paciente, enlace **"Agregar a Google Calendar"**, archivo **.ics** (para cualquier calendario del celular) o copiar el mensaje. |
 | **Importar** | Carga pacientes, doctores, atenciones o pagos desde **Excel (.xlsx)** o **CSV**. Detecta automáticamente las columnas, permite corregir la relación, muestra vista previa y omite duplicados. |
 | **Inicio de sesión** | Con Google (OAuth). Opcionalmente se puede limitar a una lista de correos. |

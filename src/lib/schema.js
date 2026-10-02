@@ -59,6 +59,7 @@ export const TABLES = {
       { key: 'pacienteId', label: 'Paciente', required: true, type: 'ref', ref: 'pacientes' },
       { key: 'atencionId', label: 'Atención', type: 'ref', ref: 'atenciones' },
       { key: 'fecha', label: 'Fecha', required: true, type: 'date' },
+      { key: 'citaId', label: 'Cita', type: 'ref', ref: 'citas', hidden: true },
       { key: 'monto', label: 'Monto (S/)', required: true, type: 'number' },
       { key: 'metodo', label: 'Método', type: 'select', options: PAYMENT_METHODS, default: 'Efectivo' },
       { key: 'concepto', label: 'Concepto' },
@@ -76,7 +77,9 @@ export const TABLES = {
       { key: 'fin', label: 'Fin', required: true, type: 'datetime' },
       { key: 'motivo', label: 'Motivo' },
       { key: 'estado', label: 'Estado', type: 'select', options: APPOINTMENT_STATES, default: 'Programada' },
+      { key: 'costo', label: 'Costo del servicio (S/)', type: 'number' },
       { key: 'notas', label: 'Notas', type: 'textarea' },
+      { key: 'atencionId', label: 'Atención', type: 'ref', ref: 'atenciones', hidden: true },
     ],
   },
 }

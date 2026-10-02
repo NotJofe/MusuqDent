@@ -124,7 +124,7 @@ export function RecordForm({ table, initial, onSubmit, onCancel, onDelete, hidde
   const [errors, setErrors] = useState({})
   const [busy, setBusy] = useState(false)
   const [failure, setFailure] = useState('')
-  const fields = TABLES[table].fields.filter((f) => !hidden.includes(f.key))
+  const fields = TABLES[table].fields.filter((f) => !f.hidden && !hidden.includes(f.key))
 
   const submit = async (e) => {
     e.preventDefault()
@@ -137,6 +137,7 @@ export function RecordForm({ table, initial, onSubmit, onCancel, onDelete, hidde
       await onSubmit(record)
     } catch (err) {
       setFailure(err.message)
+    } finally {
       setBusy(false)
     }
   }

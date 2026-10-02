@@ -31,19 +31,19 @@ export function demoData() {
   ]
   const pagos = [
     { id: newId('g'), pacienteId: maria.id, atencionId: atenciones[0].id, fecha: day(-30), monto: '80', metodo: 'Yape', concepto: 'Profilaxis', comprobante: '', notas: '', ...stamp },
-    { id: newId('g'), pacienteId: maria.id, atencionId: atenciones[1].id, fecha: day(-7), monto: '100', metodo: 'Efectivo', concepto: 'Adelanto resina', comprobante: '', notas: '', ...stamp },
+    { id: newId('g'), pacienteId: maria.id, citaId: '', atencionId: atenciones[1].id, fecha: day(-7), monto: '100', metodo: 'Efectivo', concepto: 'Adelanto resina', comprobante: '', notas: '', ...stamp },
     { id: newId('g'), pacienteId: jose.id, atencionId: atenciones[2].id, fecha: day(-14), monto: '50', metodo: 'Plin', concepto: 'Evaluación', comprobante: '', notas: '', ...stamp },
   ]
-  const cita = (pac, doc, d, time, mins, motivo, estado = 'Programada') => {
+  const cita = (pac, doc, d, time, mins, motivo, estado = 'Programada', costo = '', atencionId = '') => {
     const inicio = `${day(d)}T${time}`
-    return { id: newId('c'), pacienteId: pac.id, doctorId: doc.id, inicio, fin: addMinutes(inicio, mins), motivo, estado, notas: '', ...stamp }
+    return { id: newId('c'), pacienteId: pac.id, doctorId: doc.id, inicio, fin: addMinutes(inicio, mins), motivo, estado, costo, atencionId, notas: '', ...stamp }
   }
   const citas = [
-    cita(maria, lucia, 0, '09:00', 30, 'Control de resina', 'Confirmada'),
-    cita(rosa, lucia, 0, '11:00', 60, 'Profilaxis'),
+    cita(maria, lucia, 0, '09:00', 30, 'Control de resina', 'Confirmada', '40'),
+    cita(rosa, lucia, 0, '11:00', 60, 'Profilaxis', 'Programada', '80'),
     cita(jose, carlos, 1, '16:00', 45, 'Instalación de brackets'),
     cita(rosa, carlos, 3, '10:30', 30, 'Evaluación'),
-    cita(maria, lucia, -7, '15:00', 60, 'Curación con resina', 'Atendida'),
+    cita(maria, lucia, -7, '15:00', 60, 'Curación con resina', 'Atendida', '150', atenciones[1].id),
   ]
   return { pacientes, doctores, atenciones, pagos, citas }
 }

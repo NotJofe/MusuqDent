@@ -3,61 +3,110 @@ import { useData } from '../data/DataContext.jsx'
 import { emptyRecord } from '../lib/schema.js'
 import { appointmentMessage, googleCalendarLink, icsContent, whatsappLink } from '../lib/share.js'
 import { addMinutes, downloadFile, formatDateTime, fullName, minutesBetween } from '../lib/utils.js'
+import { AttendedPanel, AttentionFromAppointment, PaymentFromAppointment } from './AttendedActions.jsx'
 import { Modal, RecordForm } from './ui.jsx'
 
 const DURATIONS = [15, 30, 45, 60, 90, 120]
 
+const TITLES = {
+  form: 'Editar cita',
+  created: 'Cita agendada',
+  attended: 'Cita atendida',
+  atencion: 'Registrar atención',
+  pago: 'Registrar pago',
+}
+
 /** Crear / editar una cita. `cita` sin id = nueva. */
 export default function AppointmentModal({ cita, onClose }) {
-  const { create, update, remove } = useData()
+  const { create, update, remove, byId } = useData()
   const isNew = !cita.id
-  const [current, setCurrent] = useState(null)
+  const [citaId, setCitaId] = useState(cita.id ?? null)
+  // form → formulario de la cita; created → compartir; attended → acciones tras atender;
+  // atencion / pago → formularios a partir de la cita
+  const [view, setView] = useState('form')
+  const [justAttended, setJustAttended] = useState(false)
+
+  // Versión más reciente de la cita (refleja los cambios guardados en este mismo modal)
+  const live = citaId ? byId.citas[citaId] ?? cita : null
 
   const initial = { ...emptyRecord('citas'), ...cita }
   if (!initial.fin && initial.inicio) initial.fin = addMinutes(initial.inicio, 30)
 
+  const backToActions = () => setView('attended')
+  const title = view === 'form' && isNew && !citaId ? 'Nueva cita' : TITLES[view]
+
   return (
-    <Modal title={isNew ? (current ? 'Cita agendada' : 'Nueva cita') : 'Editar cita'} onClose={onClose} wide>
-      {isNew && current ? <SharePanel cita={current} justCreated onClose={onClose} /> : (
-      <RecordForm
-        table="citas"
-        initial={initial}
-        onCancel={onClose}
-        submitLabel={isNew ? 'Agendar' : 'Guardar'}
-        onDelete={isNew ? null : async () => {
-          if (!window.confirm('¿Eliminar esta cita? Si el paciente no asistirá, también puedes marcarla como "Cancelada".')) return
-          await remove('citas', cita.id)
-          onClose()
-        }}
-        onSubmit={async (rec) => {
-          if (isNew) {
-            const saved = await create('citas', rec)
-            setCurrent(saved)
-          } else {
-            await update('citas', rec)
-            onClose()
-          }
-        }}
-      >
-        {(rec, setRec) => (
-          <div className="durations">
-            <span className="muted small">Duración:</span>
-            {DURATIONS.map((m) => (
-              <button
-                type="button"
-                key={m}
-                className={`chip ${minutesBetween(rec.inicio, rec.fin) === m ? 'chip-active' : ''}`}
-                disabled={!rec.inicio}
-                onClick={() => setRec((r) => ({ ...r, fin: addMinutes(r.inicio, m) }))}
-              >
-                {m < 60 ? `${m} min` : `${m / 60} h`}
-              </button>
-            ))}
+    <Modal title={title} onClose={onClose} wide>
+      {view === 'created' && live && <SharePanel cita={live} justCreated onClose={onClose} />}
+
+      {view === 'attended' && live && (
+        <>
+          {justAttended && <p className="alert alert-success">✅ Cita de {fullName(byId.pacientes[live.pacienteId])} marcada como atendida.</p>}
+          <AttendedPanel cita={live} onManual={() => setView('atencion')} onPay={() => setView('pago')} />
+          <div className="form-actions">
+            <button type="button" className="btn" onClick={() => { setJustAttended(false); setView('form') }}>← Volver a la cita</button>
+            <span className="spacer" />
+            <button type="button" className="btn btn-primary" onClick={onClose}>Listo</button>
           </div>
-        )}
-      </RecordForm>
+        </>
       )}
-      {!isNew && <SharePanel cita={cita} />}
+
+      {view === 'atencion' && live && <AttentionFromAppointment cita={live} onDone={backToActions} onCancel={backToActions} />}
+      {view === 'pago' && live && <PaymentFromAppointment cita={live} onDone={backToActions} onCancel={backToActions} />}
+
+      {view === 'form' && (
+        <>
+          <RecordForm
+            key={live?.actualizadoEn ?? 'new'}
+            table="citas"
+            initial={live ?? initial}
+            onCancel={onClose}
+            submitLabel={citaId ? 'Guardar' : 'Agendar'}
+            onDelete={citaId ? async () => {
+              if (!window.confirm('¿Eliminar esta cita? Si el paciente no asistirá, también puedes marcarla como "Cancelada".')) return
+              await remove('citas', citaId)
+              onClose()
+            } : null}
+            onSubmit={async (rec) => {
+              const wasAttended = live?.estado === 'Atendida'
+              const saved = citaId ? await update('citas', rec) : await create('citas', rec)
+              setCitaId(saved.id)
+              if (saved.estado === 'Atendida') {
+                // Al marcarla como atendida se ofrecen las acciones de atención y pago
+                setJustAttended(!wasAttended)
+                setView('attended')
+              } else if (!citaId) {
+                setView('created')
+              } else {
+                onClose()
+              }
+            }}
+          >
+            {(rec, setRec) => (
+              <div className="durations">
+                <span className="muted small">Duración:</span>
+                {DURATIONS.map((m) => (
+                  <button
+                    type="button"
+                    key={m}
+                    className={`chip ${minutesBetween(rec.inicio, rec.fin) === m ? 'chip-active' : ''}`}
+                    disabled={!rec.inicio}
+                    onClick={() => setRec((r) => ({ ...r, fin: addMinutes(r.inicio, m) }))}
+                  >
+                    {m < 60 ? `${m} min` : `${m / 60} h`}
+                  </button>
+                ))}
+              </div>
+            )}
+          </RecordForm>
+          {live?.estado === 'Atendida' && (
+            <div className="share-panel">
+              <AttendedPanel cita={live} onManual={() => setView('atencion')} onPay={() => setView('pago')} />
+            </div>
+          )}
+          {live && <SharePanel cita={live} />}
+        </>
+      )}
     </Modal>
   )
 }

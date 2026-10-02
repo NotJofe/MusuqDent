@@ -176,6 +176,17 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--primary-sof
 .modal-body { padding: 1.25rem; }
 .share-panel { border-top: 1px solid var(--border); margin-top: 1.25rem; padding-top: 1rem; }
 .modal-body > .share-panel:first-child { border-top: none; margin-top: 0; padding-top: 0; }
+.attended { display: flex; flex-direction: column; gap: 0.75rem; }
+.attended-block { border: 1px solid var(--border); border-radius: var(--radius); padding: 0.85rem 1rem; background: #f8fafc; }
+.attended-block p { margin: 0 0 0.5rem; }
+.attended-row { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+.choice-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.6rem; }
+.choice { display: flex; flex-direction: column; gap: 0.25rem; text-align: left; padding: 0.75rem 0.9rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); font: inherit; color: inherit; cursor: pointer; }
+.choice:hover:not(:disabled) { border-color: var(--primary); background: #f0fdfa; }
+.choice:disabled { opacity: 0.6; cursor: wait; }
+.pay-summary { display: flex; flex-wrap: wrap; gap: 0.4rem 1.25rem; font-size: 0.92rem; }
+.cost-box { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 0.75rem 1.5rem; padding: 0.85rem 1rem; margin-bottom: 1rem; border-radius: var(--radius); background: #f0fdfa; border: 1px solid #99f6e4; }
+.cost-box label { display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.85rem; font-weight: 500; min-width: 200px; }
 .share-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 
 /* Importar */
@@ -222,6 +233,7 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--primary-sof
   .form-grid { grid-template-columns: 1fr; }
   .span-2 { grid-column: auto; }
   .stats-compact { grid-template-columns: 1fr; }
+  .choice-grid { grid-template-columns: 1fr; }
   .fc .fc-toolbar { flex-direction: column; gap: 0.5rem; }
   .fc .fc-toolbar-title { font-size: 1rem; }
   .list-row { flex-wrap: wrap; }
