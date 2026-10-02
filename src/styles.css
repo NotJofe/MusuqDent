@@ -90,7 +90,7 @@ h3 { font-size: 0.95rem; margin: 0 0 0.5rem; }
 
 /* Tarjetas */
 .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.1rem; box-shadow: var(--shadow); }
-.card-header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 0.75rem; }
+.card-header { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem 1rem; margin-bottom: 0.75rem; flex-wrap: wrap; }
 .card-header h2 { margin: 0; }
 .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
 .grid-2 > * { min-width: 0; }
@@ -188,6 +188,24 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--primary-sof
 .cost-box { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 0.75rem 1.5rem; padding: 0.85rem 1rem; margin-bottom: 1rem; border-radius: var(--radius); background: #f0fdfa; border: 1px solid #99f6e4; }
 .cost-box label { display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.85rem; font-weight: 500; min-width: 200px; }
 .share-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+/* Finanzas */
+.filters { display: flex; flex-wrap: wrap; gap: 0.75rem 1rem; align-items: flex-end; }
+.filters label { display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.85rem; font-weight: 500; flex: 1 1 140px; max-width: 220px; }
+.segmented { display: inline-flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; align-self: flex-end; }
+.segmented button { background: var(--surface); border: none; padding: 0.5rem 0.85rem; font: inherit; font-size: 0.88rem; cursor: pointer; color: var(--muted); }
+.segmented button + button { border-left: 1px solid var(--border); }
+.segmented button.active { background: var(--primary-soft); color: var(--primary-dark); font-weight: 600; }
+.inline-label { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--muted); }
+.inline-label select { width: auto; max-width: 100%; }
+.chart { position: relative; width: 100%; }
+.chart svg { display: block; }
+.chart g.bar { cursor: pointer; }
+.chart-tip { position: absolute; z-index: 2; white-space: nowrap; background: #0f172a; color: #fff; border-radius: 8px; padding: 0.4rem 0.65rem; font-size: 0.82rem; display: flex; flex-direction: column; pointer-events: none; box-shadow: 0 4px 12px rgb(15 23 42 / 20%); }
+.chart-empty { padding: 2.5rem 1rem; text-align: center; }
+.group-table { margin-top: 1rem; }
+.table tfoot th { background: #f8fafc; color: var(--text); text-transform: none; font-size: 0.9rem; }
+.capitalize { text-transform: capitalize; }
 
 /* Importar */
 .import-steps { display: flex; gap: 1rem; flex-wrap: wrap; align-items: flex-end; }

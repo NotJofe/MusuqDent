@@ -21,6 +21,7 @@ tienen acceso de edición a esa hoja.
 | **Agenda** | Calendario tipo Google Calendar (mes / semana / día / lista). Clic en un horario para agendar, arrastrar para reprogramar, filtro por doctor y estados (programada, confirmada, atendida, cancelada, no asistió). |
 | **Cita atendida** | Al marcar una cita como *Atendida* aparecen dos acciones: **Crear atención** (rápida, con los datos de la cita, o completándola manualmente) y **Registrar pago**. Cada cita puede tener un **costo del servicio**: es opcional al agendar, pero obligatorio para registrar un pago. Se muestra lo pagado y lo pendiente de la cita. |
 | **Compartir cita** | Enviar recordatorio por **WhatsApp** al celular del paciente, enlace **"Agregar a Google Calendar"**, archivo **.ics** (para cualquier calendario del celular) o copiar el mensaje. |
+| **Finanzas** | Resumen de ingresos (pagos registrados) con filtros por mes o rango de fechas, doctor y método de pago. **Agrupar por** día, semana, mes, doctor, método, concepto o paciente, con gráfico de barras y tabla. **Exportar a Excel** (.xlsx) con una hoja de resumen y otra con el detalle de los pagos filtrados. |
 | **Importar** | Carga pacientes, doctores, atenciones o pagos desde **Excel (.xlsx)** o **CSV**. Detecta automáticamente las columnas, permite corregir la relación, muestra vista previa y omite duplicados. |
 | **Inicio de sesión** | Con Google (OAuth). Opcionalmente se puede limitar a una lista de correos. |
 
@@ -144,10 +145,10 @@ src/
   data/        almacenamiento: SheetsStore (Google Sheets) y LocalStore (modo demo)
   lib/         esquema de tablas, utilidades, importación y compartir citas
   components/  layout, formularios, modal de citas
-  pages/       Inicio, Pacientes, Ficha, Doctores, Agenda, Importar, Configuración
+  pages/       Inicio, Pacientes, Ficha, Doctores, Agenda, Finanzas, Importar, Configuración
 ```
 
-Tecnologías: React + Vite, FullCalendar, Papa Parse y read-excel-file.
+Tecnologías: React + Vite, FullCalendar, Papa Parse, read-excel-file y write-excel-file.
 
 ## Próximos pasos sugeridos
 

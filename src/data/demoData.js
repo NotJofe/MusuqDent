@@ -34,6 +34,18 @@ export function demoData() {
     { id: newId('g'), pacienteId: maria.id, citaId: '', atencionId: atenciones[1].id, fecha: day(-7), monto: '100', metodo: 'Efectivo', concepto: 'Adelanto resina', comprobante: '', notas: '', ...stamp },
     { id: newId('g'), pacienteId: jose.id, atencionId: atenciones[2].id, fecha: day(-14), monto: '50', metodo: 'Plin', concepto: 'Evaluación', comprobante: '', notas: '', ...stamp },
   ]
+  // Pagos adicionales de los últimos dos meses para que Finanzas tenga datos
+  const tratamientos = [['Profilaxis', 80], ['Curación con resina', 150], ['Extracción', 120], ['Evaluación', 50], ['Blanqueamiento', 350]]
+  const metodos = ['Efectivo', 'Yape', 'Plin', 'Tarjeta', 'Yape', 'Transferencia']
+  for (let i = 0; i < 24; i++) {
+    const d = -((i * 5) % 58)
+    const [tratamiento, costo] = tratamientos[i % tratamientos.length]
+    const pac = pacientes[i % pacientes.length]
+    const doc = doctores[i % 3 === 0 ? 1 : 0]
+    const atencion = { id: newId('a'), pacienteId: pac.id, doctorId: doc.id, fecha: day(d), tratamiento, piezaDental: '', diagnostico: '', costo: String(costo), notas: '', ...stamp }
+    atenciones.push(atencion)
+    pagos.push({ id: newId('g'), pacienteId: pac.id, citaId: '', atencionId: atencion.id, fecha: day(d), monto: String(costo), metodo: metodos[i % metodos.length], concepto: tratamiento, comprobante: '', notas: '', ...stamp })
+  }
   const cita = (pac, doc, d, time, mins, motivo, estado = 'Programada', costo = '', atencionId = '') => {
     const inicio = `${day(d)}T${time}`
     return { id: newId('c'), pacienteId: pac.id, doctorId: doc.id, inicio, fin: addMinutes(inicio, mins), motivo, estado, costo, atencionId, notas: '', ...stamp }

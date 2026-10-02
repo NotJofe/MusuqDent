@@ -5,6 +5,7 @@ import Layout from './components/Layout.jsx'
 import { DataProvider } from './data/DataContext.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 import Doctors from './pages/Doctors.jsx'
+import Finance from './pages/Finance.jsx'
 import ImportPage from './pages/ImportPage.jsx'
 import Login from './pages/Login.jsx'
 import PatientDetail from './pages/PatientDetail.jsx'
@@ -26,6 +27,7 @@ function Protected() {
           <Route path="pacientes/:id" element={<PatientDetail />} />
           <Route path="doctores" element={<Doctors />} />
           <Route path="agenda" element={<Suspense fallback={<div className="loading">Cargando agenda…</div>}><CalendarPage /></Suspense>} />
+          <Route path="finanzas" element={<Finance />} />
           <Route path="importar" element={<ImportPage />} />
           <Route path="configuracion" element={<Settings />} />
           <Route path="*" element={<Navigate to="/" replace />} />

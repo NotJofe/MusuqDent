@@ -10,6 +10,7 @@ const NAV = [
   { to: '/agenda', label: 'Agenda', icon: '📅' },
   { to: '/pacientes', label: 'Pacientes', icon: '🧑' },
   { to: '/doctores', label: 'Doctores', icon: '🩺' },
+  { to: '/finanzas', label: 'Finanzas', icon: '💰' },
   { to: '/importar', label: 'Importar', icon: '📥' },
   { to: '/configuracion', label: 'Configuración', icon: '⚙️' },
 ]
