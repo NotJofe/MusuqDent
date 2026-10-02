@@ -3,6 +3,10 @@
 
 const STORAGE_KEY = 'musuqdent.config'
 
+// OAuth Client ID del proyecto MusuqDent en Google Cloud. No es un secreto: Google lo expone
+// al navegador de todos modos. Se puede reemplazar con VITE_GOOGLE_CLIENT_ID o desde la app.
+const DEFAULT_GOOGLE_CLIENT_ID = '276450257267-kkabj237a07j67ro5smjbt75lb13uk67.apps.googleusercontent.com'
+
 function readStored() {
   try {
     return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}')
@@ -15,7 +19,7 @@ export function getConfig() {
   const env = import.meta.env ?? {}
   const stored = readStored()
   return {
-    googleClientId: stored.googleClientId || env.VITE_GOOGLE_CLIENT_ID || '',
+    googleClientId: stored.googleClientId || env.VITE_GOOGLE_CLIENT_ID || DEFAULT_GOOGLE_CLIENT_ID,
     spreadsheetId: stored.spreadsheetId || env.VITE_SPREADSHEET_ID || '',
     allowedEmails: (stored.allowedEmails ?? env.VITE_ALLOWED_EMAILS ?? '')
       .split(',').map((e) => e.trim().toLowerCase()).filter(Boolean),

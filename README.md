@@ -43,7 +43,14 @@ guardan solo en tu navegador (no se necesita configurar Google).
 3. No hace falta crear pestañas: la primera vez que alguien inicia sesión, MusuqDent crea
    automáticamente `Pacientes`, `Doctores`, `Atenciones`, `Pagos` y `Citas` con sus encabezados.
 
-### 2. Crear el Client ID de Google (una sola vez)
+### 2. Client ID de Google
+
+El proyecto ya trae configurado su Client ID (`src/config.js`). Solo necesitas repetir estos
+pasos si quieres usar un proyecto de Google Cloud distinto.
+
+<details>
+<summary>Crear un Client ID propio</summary>
+
 
 1. Entra a [Google Cloud Console](https://console.cloud.google.com/) y crea un proyecto
    (por ejemplo "MusuqDent").
@@ -59,6 +66,8 @@ guardan solo en tu navegador (no se necesita configurar Google).
    - **Orígenes de JavaScript autorizados**: agrega las direcciones desde donde se abrirá la app,
      por ejemplo `http://localhost:5173` y `https://TU_USUARIO.github.io`.
    - Copia el **ID de cliente** (termina en `.apps.googleusercontent.com`).
+
+</details>
 
 ### 3. Configurar MusuqDent
 
